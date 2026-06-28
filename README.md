@@ -81,13 +81,13 @@ LIMIT and OFFSET in the SQL query and add page buttons on frontend.
 - no pagination
 - no email notifications
 
-## Time spent
-- planning: 30 min
-- backend: 2 hours
-- frontend: 2 hours
-- tests: 30 min
-- readme: 30 min
-- total: around 5.5 hours
+## Time Log
+- Planning: 30 minutes
+- Backend and database: 2 hours
+- Frontend: 2 hours 30 minutes
+- Testing: 45 minutes
+- Documentation and improvements: 45 minutes
+- Total: 6 hours 30 minutes
 
 ## Declaration
 I confirm that I completed this challenge without using generative AI, 
