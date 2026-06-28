@@ -1,100 +1,95 @@
-# SupportDesk - Customer Support Ticket System
+# SupportDesk - Mini Customer Support Ticket System
 
-## Project Overview
-A full-stack web application designed to manage and organize customer support tickets. The application allows customers to submit tickets with automatic validation and urgent detection, and enables support staff to view, filter, search, and update ticket statuses via a management dashboard.
+## What is this?
+This is a full stack web app for managing customer support tickets. 
+I built it using React for frontend, Node.js and Express for backend 
+and SQLite for storing data.
 
-## Technology Stack
-- **Frontend**: React (built with Create React App)
-- **Backend**: Node.js, Express
-- **Database**: SQLite (managed via `better-sqlite3` for synchronous database operations)
-- **Testing**: Node.js core assert module for automated API testing
+## Tech Stack
+- React (frontend)
+- Node.js + Express (backend)
+- SQLite with better-sqlite3
+- CSS for basic styling
 
-## Setup Instructions
+## Database Setup
+I used SQLite so no extra software needed to install.
+When backend runs for first time it automatically creates a 
+tickets.db file in the backend folder. Thats where all data is saved.
 
-### Database Setup
-The application uses SQLite, which does not require installing a standalone database server. 
-- The database schema is defined and initialized automatically when the backend server starts. 
-- Running `node index.js` in the `backend` folder will automatically create the `tickets.db` SQLite database file and initialize the `tickets` table if it does not already exist.
+## How to Run
 
-### How to Run the Backend
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Install backend dependencies:
-   ```bash
-   npm install
-   ```
-3. Run the backend server:
-   ```bash
-   node index.js
-   ```
-   *The backend server runs locally on **http://localhost:3001**.*
+### Backend
+cd backend
+npm install
+node index.js
+runs on http://localhost:3001
 
-### How to Run the Frontend
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install frontend dependencies:
-   ```bash
-   npm install
-   ```
-3. Run the frontend development server:
-   ```bash
-   npm start
-   ```
-   *The frontend portal runs locally on **http://localhost:3000**.*
+### Frontend
+cd frontend
+npm install
+npm start
+runs on http://localhost:3000
 
-### How to Run the Tests
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Run the automated API test suite:
-   ```bash
-   node tests.js
-   ```
+### Tests
+cd backend
+node tests.js
 
-## API Endpoint Summary
-- **POST `/api/tickets`**: Creates a support ticket (with name, email, subject, description, priority, and optional urgency).
-- **GET `/api/tickets`**: Retrieves all support tickets.
-- **GET `/api/tickets/:id`**: Retrieves a single ticket by its ID.
-- **PATCH `/api/tickets/:id/status`**: Updates the status of a ticket (`open`, `in progress`, or `closed`).
-- **GET `/api/dashboard`**: Retrieves statistics for total, open, in-progress, closed, and urgent tickets.
+## API Endpoints
+- POST /api/tickets → create ticket
+- GET /api/tickets → get all tickets
+- GET /api/tickets/:id → get one ticket
+- PATCH /api/tickets/:id/status → update status
+- GET /api/dashboard → dashboard stats
 
 ## Duplicate Email Decision
-I decided to allow duplicate emails. A single customer may experience multiple separate issues over time and needs to be able to create new tickets for each one. Restricting submissions to unique emails would block active customers from seeking support for subsequent issues.
+I allowed duplicate emails. A customer might have more than one 
+problem so they should be able to open multiple tickets. 
+If i blocked duplicate emails the customer wouldnt be able to 
+create a new ticket which doesnt make sense for a support system.
 
-## Initiative Feature Explanation
-### **Automated Urgent Ticket Detection**
-To streamline support ticketing, I implemented an automated urgency assessment:
-- When a ticket is submitted, the backend analyzes the description for the keyword `"urgent"` (case-insensitive) or checks the explicit urgency flag.
-- If detected, the ticket is automatically marked as `is_urgent = 1` in the database.
-- These urgent tickets are highlighted visually in the frontend interface and tracked separately on the statistics dashboard, helping support agents prioritize critical issues immediately.
+Good side: customers can submit as many tickets as they need
+Bad side: cant automatically group tickets from same customer
 
-## Known Limitations
-- **No User Authentication**: Anyone can view, search, and update ticket statuses.
-- **No Pagination**: The ticket list displays all records at once, which could degrade performance if there are thousands of tickets.
+## What I added extra (Initiative Feature)
+I added search and filter on the tickets list page. Users can 
+search by name, email or subject. They can also filter by 
+priority and by status. I added this because without search 
+it would be hard to find a specific ticket if there are many.
+In future i would add date filter and sorting by different columns.
 
-## What You Would Build Next
-1. **Pagination**: Implement cursor-based or offset-based pagination in the backend (`LIMIT` / `OFFSET` in SQL queries) and page selection controls in the React frontend to handle scaling.
-2. **User Authentication & Authorization**: Add role-based login (e.g., Customer vs. Support Agent) using JWTs to restrict status changes and dashboard access to authorized staff.
-3. **Email Notifications**: Integrate Nodemailer or an external email service to notify customers when their ticket status updates.
-4. **Rich Text Support**: Allow markdown or HTML in ticket descriptions for better clarity.
+## What I finished
+- ticket creation form with validation
+- view all tickets with search and filter
+- ticket detail page
+- status update
+- urgent ticket detection
+- dashboard with stats
+- 2 automated tests
 
-## Assumptions Made
-- One status update is performed at a time.
-- Urgent detection keyword scanning is handled server-side to maintain a reliable source of truth.
-- SQLite is sufficient for this application's target scale.
+## What I didnt finish
+- Pagination: i ran out of time. To implement it i would use 
+LIMIT and OFFSET in the SQL query and add page buttons on frontend.
 
-## Time Log
-- Planning: 30 minutes
-- Backend and database: 2 hours
-- Frontend: 2 hours
-- Tests: 30 minutes
-- README: 30 minutes
-- Total: 5 hours 30 minutes
+## What I would do next
+- add pagination
+- send email when status changes
+- let tickets be assigned to team members
+- export tickets to CSV file
+
+## Limitations
+- no login system
+- no pagination
+- no email notifications
+
+## Time spent
+- planning: 30 min
+- backend: 2 hours
+- frontend: 2 hours
+- tests: 30 min
+- readme: 30 min
+- total: around 5.5 hours
 
 ## Declaration
-I confirm that I completed this challenge without using generative AI, an AI coding assistant, or an AI-enabled editor. I understand the submitted code and can explain and modify it.
+I confirm that I completed this challenge without using generative AI, 
+an AI coding assistant, or an AI-enabled editor. I understand the 
+submitted code and can explain and modify it.
