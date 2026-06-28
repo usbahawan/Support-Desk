@@ -7,7 +7,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 3001;
 
 app.post('/api/tickets', (req, res) => {
-    const { customer_name, customer_email, subject, description, priority } = req.body;
+    const { customer_name, customer_email, subject, description, priority, is_urgent } = req.body;
     if(!customer_name){
         return res.status(400).json({ error: 'name required' });
     }
@@ -33,10 +33,17 @@ app.post('/api/tickets', (req, res) => {
     if(!emailRegex.test(customer_email)){
         return res.status(400).json({ error: 'invalid email' });
     }
+    let isUrgent = 0;
+    if(is_urgent){
+        isUrgent = 1;
+    }
+    if(description.toLowerCase().includes('urgent')){
+        isUrgent = 1;
+    }
     const now = new Date().toISOString();
     const stmt = db.prepare(
-        `INSERT INTO tickets (customer_name, customer_email, subject, description, priority, status, is_urgent, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'open', 0, ?, ?)`);
-    const result = stmt.run(customer_name, customer_email, subject, description, priority, now, now);
+        `INSERT INTO tickets (customer_name, customer_email, subject, description, priority, status, is_urgent, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'open', ?, ?, ?)`);
+    const result = stmt.run(customer_name, customer_email, subject, description, priority, isUrgent, now, now);
     res.status(201).json({ id: result.lastInsertRowid });
 });
 
